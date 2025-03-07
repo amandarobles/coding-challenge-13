@@ -11,3 +11,11 @@ function createElement(name, position) { //writing function that uses createElem
 createElement("John Doe", "Forensics Analyst"); //calling function to add a new employee card to dashboard
 createElement("Liam Schnieder", "Head Forensics Analyst");
 createElement("Dave Cuomo", "Law Enforcement Detective");
+
+// Task 3: Bulk Update on Employee Cards
+const employeeCardNodeList = document.querySelectorAll(".employeeCard"); //using document.querySelectorAll to select all elements with employee card class
+const employeeCardArray = Array.from(employeeCardNodeList); //converting NodeList into an array using Array.from
+employeeCardArray.forEach(card => { //using array method to update card's style
+    card.style.backgroundColor = "lightslategray"; //changing backgroun color
+    card.style.border = "2px solid black"; //adding a border
+});
