@@ -7,6 +7,14 @@ function createElement(name, position) { //writing function that uses createElem
     card.setAttribute("id", `employee${cnt}`);
     card.innerHTML = `<h3>${name}</h3><p>${position}</p>`; //adding heading for employee's name/ a paragraph for employee's position
 }
+// Task 4: Implementing Removal of Employee Cards with Event Bubbling
+card.addEventListener("click", ()=> {console.log(`Clicked ${card.id} -${name}`)}) //adding event listener to card that logs message
+deleteBtn = document.createElement("button"); // "remove" button for deleting card
+deleteBtn.textContent = "Remove employee"; //adding button text
+deleteBtn.addEventListener("click", (event) =>{ //adding event listener to button
+    employeeContainer.removeChild(card) //removeChild card from employeeContainer
+    event.stopPropagation(); //using stopPropagation () in "remove" button's event handler to prevent event from bubbling up
+});
 //Test data Task 2
 createElement("John Doe", "Forensics Analyst"); //calling function to add a new employee card to dashboard
 createElement("Liam Schnieder", "Head Forensics Analyst");
