@@ -1,7 +1,7 @@
 // Task 2: Employee Cards Dynamic Addition
 let cnt = 0; //ensuring unique element ids
 function createElement(name, position) { //writing function that uses createElement
-    const employeeContatiner = document.getElementById("employeeContainer"); //finding employeeContainer by id
+    const employeeContainer = document.getElementById("employeeContainer"); //finding employeeContainer by id
     let card = document.createElement("div"); //building an employee card
     card.setAttribute("class", "employeeCard"); //setting attributes using setAttribute
     card.setAttribute("id", `employee${cnt}`);
