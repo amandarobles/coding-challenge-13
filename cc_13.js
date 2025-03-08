@@ -1,50 +1,67 @@
 // Task 2: Employee Cards Dynamic Addition
-let cnt = 0; //ensuring unique element ids
-function createElement(name, position) { //writing function that uses createElement
-    const employeeContainer = document.getElementById("employeeContainer"); //finding employeeContainer by id
-    let card = document.createElement("div"); //building an employee card
-    card.setAttribute("class", "employeeCard"); //setting attributes using setAttribute
-    card.setAttribute("id", `employee${cnt}`);
-    card.innerHTML = `<h3>${name}</h3><p>${position}</p>`; //adding heading for employee's name/ a paragraph for employee's position
-}
-// Task 4: Implementing Removal of Employee Cards with Event Bubbling
-card.addEventListener("click", ()=> {console.log(`Clicked ${card.id} -${name}`)}) //adding event listener to card that logs message
-deleteBtn = document.createElement("button"); // "remove" button for deleting card
-deleteBtn.textContent = "Remove employee"; //adding button text
-deleteBtn.addEventListener("click", (event) =>{ //adding event listener to button
-    employeeContainer.removeChild(card) //removeChild card from employeeContainer
-    event.stopPropagation(); //using stopPropagation () in "remove" button's event handler to prevent event from bubbling up
-});
+function addEmployeeCard(name, position) { //writing function that uses createElement
+    const card = document.createElement('div'); //building an employee card
+    card.setAttribute('class', 'employeeCard'); //setting attributes using setAttribute
+    const heading = document.createElement('h3'); //name as heading
+    heading.textContent = name;
+    const paragraph = document.createElement('h3'); //position as paragraph
+    paragraph.textContent = position;
+    const removeButton = document.createElement('button'); //creating remove button
+    removeButton.textContent = 'Remove';
+    const editButton = document.createElement('button'); // Task 5 -creating edit button
+    editButton.textContent = 'Edit'; 
+    
+    card.appendChild(heading); //appending elements to the card
+    card.appendChild(paragraph);
+    card.appendChild(editButton);
+    card.appendChild(removeButton);
 
-// Task 5: Incline Editing for Employee Cards
-editBtn = document.createElement("button"); //creating a "Edit Information" button
-editBtn.textContent = "Edit information"; //adding text
-editBtn.addEventListener("click", (event) => { 
-    svBtn = document.createElement("button"); //creating a "Save Information" button
-    svBtn.textContent = "Save information"; //adding text
-    card.replaceChild(svBtn, card.children[2]); //appending save button to the card
-    card.children[1].outerHTML += `<input value= "${name}"><input value = "${position}">`
-    svBtn.addEventListener("click", (event) => { //adding event listener to employee card's edit button that swaps content with input fields
-        card.children[0].textContent = card.children[2].value //updating content of h3 tag to match value of first input
-        card.children[1].textContent = card.children[3].value //updating content of p tag to match value of second input
-        event.stopPropagation();
+    document.getElementById('employeeContainer').appendChild(card); //appending card to employee container
+
+    removeButton.addEventListener('click', function(event) { //removing functionality
+        console.log('Remove button has been clicked'); //task 4- attaching click event listener
+        event.stopPropagation(); //using stopPropagation to prevent bubbling
+        card.remove();
     });
-    event.stopPropagation();
-});
-card.appendChild(editBtn);
-card.appendChild(deleteBtn); //appending remove button to card
-employeeContainer.appendChild(card); //appending employee card to "employeeContainer" using appendChild
-cnt += 1; //updating counter
+    editButton.addEventListener('click', function (){ //Task 5- adding event listener to support ticket
+        const nameInput = document.createElement('input'); //pre-populating input fields
+        nameInput.value = heading.textContent;
+        const positionInput = document.createElement('input');
+        positionInput.value = paragraph.textContent;
+        const saveButton = document.createElement ('button');
+        saveButton.textContent = 'Save'; //providing mechanism updating ticket with new values
+        card.appendChild(positionInput); //input reverted back to static texg
+
+        card.innerHTML = ''; //appending new functions
+        card.appendChild(nameInput);
+        card.appendChild(position);
+        card.appendChild(saveButton);
+        card.appendChild(removeButton);
+
+        saveButton.addEventListener('click', function() { //saving button listener
+            heading.textContent = nameInput.value;
+            paragraph.textContent = positionInput.value;
+
+            card.innerHTML = '';
+            card.appendChild(heading);
+            card.appendChild(paragraph);
+            card.appendChild(editButton);
+            card.appendChild(removeButton); //event listener for save button and inner text appending
+        });
+    });
+}
 
 //Test data Task 2
-createElement("John Doe", "Forensics Analyst"); //calling function to add a new employee card to dashboard
-createElement("Liam Schnieder", "Head Forensics Analyst");
-createElement("Dave Cuomo", "Law Enforcement Detective");
+addEmployeeCard("John Doe", "Forensics Analyst"); //calling function to add a new employee card to dashboard
+addEmployeeCard("Liam Schnieder", "Head Forensics Analyst");
+addEmployeeCard("Dave Cuomo", "Law Enforcement Detective");
 
 // Task 3: Bulk Update on Employee Cards
-const employeeCardNodeList = document.querySelectorAll(".employeeCard"); //using document.querySelectorAll to select all elements with employee card class
-const employeeCardArray = Array.from(employeeCardNodeList); //converting NodeList into an array using Array.from
-employeeCardArray.forEach(card => { //using array method to update card's style
+function bulkUpdateEmployeeCards() {
+const cards = document.querySelectorAll('.employeeCard'); //using document.querySelectorAll to select all elements with employee card class
+const cardArray = Array.from(cards); //converting NodeList into an array using Array.from
+cardArray.forEach(card => { //using array method to update card's style
     card.style.backgroundColor = "lightslategray"; //changing backgroun color
     card.style.border = "2px solid black"; //adding a border
-});
+}); }
+bulkUpdateEmployeeCards(); //activating bulk update function
